@@ -1,0 +1,21 @@
+.hero.short {
+  min-height: auto;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+.hero.short h1 {
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
+}
+.who-for {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+.who-for li {
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  font-weight: 500;
+}

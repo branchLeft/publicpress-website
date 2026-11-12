@@ -1,0 +1,14 @@
+/*
+ * A 320px phone. At the size journey.css gives them below 30rem, the wordmark and the
+ * "Register interest" button are 8px wider than the screen side by side. Below 22rem the
+ * wordmark steps down a little and the gap tightens so the header fits without scrolling.
+ */
+@media (max-width: 22rem) {
+  .logo {
+    --h: 1.6rem;
+  }
+
+  .top .inner {
+    gap: 0.5rem;
+  }
+}

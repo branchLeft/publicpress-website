@@ -1,0 +1,35 @@
+# The publicpress-website Compose stack, for app1. `${IMAGE}` is written by the
+# deploy tooling after CI builds and pushes the image, and is always a digest,
+# never a tag. The deploy job comes with the app1 slot; until then nothing
+# runs this file.
+#
+# Port 8085, on app1's private address. Chosen because it is free: app1
+# already uses 8080 (website), 9092 (website-metrics), 9100 (node exporter)
+# and the 81xx tenant ports; ops1 uses the 83xx range; 8090 is the demo
+# broker's loopback port. 8085 is used by nothing.
+name: publicpress-website
+
+services:
+  publicpress-website:
+    image: ${IMAGE}
+    restart: unless-stopped
+    environment:
+      PORT: '8085'
+      PUBLICPRESS_SMTP_HOST: ${PUBLICPRESS_SMTP_HOST:?set PUBLICPRESS_SMTP_HOST in /etc/branchleft/publicpress-website.env}
+      PUBLICPRESS_SMTP_PORT: ${PUBLICPRESS_SMTP_PORT:?set PUBLICPRESS_SMTP_PORT in /etc/branchleft/publicpress-website.env}
+      PUBLICPRESS_SMTP_USER: ${PUBLICPRESS_SMTP_USER:?set PUBLICPRESS_SMTP_USER in /etc/branchleft/publicpress-website.env}
+      PUBLICPRESS_SMTP_PASSWORD: ${PUBLICPRESS_SMTP_PASSWORD:?set PUBLICPRESS_SMTP_PASSWORD in /etc/branchleft/publicpress-website.env}
+    ports:
+      # Private address only: the edge reaches this over the private network,
+      # and the host's firewall opens no inbound port but SSH.
+      - '10.20.1.100:8085:8085'
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1:8085/']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    # Per-container limits: a systemd limit on the oneshot unit that runs
+    # `docker compose up -d` never reaches the containers dockerd creates.
+    mem_limit: 256m
+    cpu_shares: 256

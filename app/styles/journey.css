@@ -1,0 +1,743 @@
+:root {
+  --strong-blue: #1f3c8f;
+}
+main {
+  pointer-events: auto;
+}
+html {
+  scroll-padding-top: 6rem;
+}
+dialog:focus {
+  outline: none;
+}
+.bl {
+  font-family: 'Syne', sans-serif;
+  font-weight: 500;
+  font-synthesis-weight: none;
+}
+.blm svg {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  vertical-align: -0.1em;
+  margin-right: 0.12em;
+}
+.btn {
+  display: inline-block;
+  background: var(--blue);
+  color: var(--paper);
+  border: 0;
+  border-radius: 999px;
+  font: 500 1rem/1.3 var(--sans);
+  padding: 0.65rem 1.4rem;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:hover,
+.btn:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+  transition: box-shadow 0.3s ease;
+}
+.top .inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1.25rem;
+  transition: padding 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.top.compact {
+  box-shadow: 0 2px 0 var(--ink);
+}
+.top.compact .inner {
+  padding-block: 0.6rem;
+}
+.logo {
+  --h: 2.6rem;
+  display: block;
+  flex: none;
+  height: var(--h);
+  width: calc(var(--h) * 4.9403);
+  overflow: hidden;
+  background: var(--blue);
+  box-shadow: 0.3rem 0.3rem 0 var(--pink);
+  transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.logo:hover,
+.logo:focus-visible {
+  background: var(--blue);
+}
+.logo:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+.logo svg {
+  display: block;
+  height: var(--h);
+  width: calc(var(--h) * 4.9403);
+  max-width: none;
+  clip-path: inset(0 0 0 0);
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    clip-path 0.3s ease;
+}
+.compact .logo {
+  width: var(--h);
+}
+.compact .logo svg {
+  transform: translateX(calc(var(--h) * -0.0235));
+  clip-path: inset(0 83.1% 0 0);
+}
+.hero {
+  min-height: calc(100vh - 6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: 3rem;
+}
+.hero h1 {
+  margin: 0 0 1.75rem;
+  font-size: clamp(2.4rem, 8vw, 6.75rem);
+  line-height: 1.03;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--strong-blue);
+  text-shadow: 0 0.03em 0.1em rgba(0, 0, 0, 0.18);
+}
+sup {
+  font-size: 0.6em;
+  line-height: 0;
+  vertical-align: 0.55em;
+}
+sup a {
+  text-decoration: none;
+  font-family: var(--mono);
+  padding-inline: 0.1em;
+}
+.hero .tag {
+  font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 500;
+  margin: 0 0 1rem;
+}
+.hero .lede {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  max-width: 36rem;
+  margin: 0 0 2rem;
+}
+.when {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--ink);
+  cursor: pointer;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+}
+.info svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+.info:hover,
+.info:focus-visible,
+.info[aria-expanded='true'] {
+  background: var(--ink);
+  color: var(--yellow);
+  outline: none;
+}
+.tip {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.6rem);
+  z-index: 5;
+  width: min(24rem, calc(100vw - 2rem));
+  background: var(--ink);
+  color: var(--paper);
+  font: 400 0.9375rem/1.5 var(--sans);
+  padding: 0.85rem 1rem;
+  border-radius: 0.25rem;
+  white-space: normal;
+}
+.info:hover + .tip,
+.when.open .tip {
+  display: block;
+}
+.beat {
+  display: grid;
+  gap: 1rem;
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+  border-top: 2px solid var(--ink);
+}
+.beat h2,
+.band h2,
+.prices h2 {
+  margin: 0;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  line-height: 1.06;
+  color: var(--blue);
+}
+.beat p,
+.band .say p {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+.anchor {
+  margin-left: 0.3em;
+  font-size: 0.55em;
+  vertical-align: 0.25em;
+  color: var(--blue);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+h2:hover .anchor,
+h3:hover .anchor,
+.anchor:focus-visible {
+  opacity: 1;
+}
+@media (hover: none) {
+  .anchor {
+    opacity: 0.45;
+  }
+}
+.more {
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  font: 500 1.0625rem/1.5 var(--sans);
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-color: var(--pink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.more:hover,
+.more:focus-visible {
+  background: var(--yellow);
+  color: var(--ink);
+  outline: none;
+}
+.band {
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+}
+.band .inner {
+  display: grid;
+  gap: 1rem;
+}
+.band.mission {
+  background: var(--blue);
+  color: var(--paper);
+}
+.band.mission h2,
+.band.mission .anchor {
+  color: var(--paper);
+}
+.band.mission .more {
+  color: var(--paper);
+  text-decoration-color: var(--paper);
+}
+.band.mission .more:hover,
+.band.mission .more:focus-visible {
+  background: var(--yellow);
+  color: var(--ink);
+}
+.ghost h2 {
+  margin-bottom: 1rem;
+}
+.try .site {
+  font: 400 0.875rem/1.4 var(--mono);
+  margin: 0.75rem 0 0;
+}
+.prices {
+  background: var(--pink);
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+.prices h2 {
+  color: var(--ink);
+  margin-bottom: 2rem;
+}
+.prices .anchor {
+  color: var(--ink);
+}
+.price-grid {
+  display: grid;
+  gap: 1.75rem;
+}
+.price {
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 0.4rem 0.4rem 0 var(--ink);
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+.price h3 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 500;
+  margin: 0 0 0.35rem;
+  color: var(--blue);
+}
+.amount {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  font-weight: 500;
+  margin: 0;
+}
+.per {
+  font: 400 0.875rem/1.4 var(--mono);
+  margin: 0 0 0.75rem;
+}
+.price p:last-child {
+  margin: 0;
+}
+.mail {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 0.4rem 0.4rem 0 var(--ink);
+  margin-top: 2rem;
+  padding: 1.5rem;
+  min-width: 0;
+}
+.mail h3 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+  color: var(--blue);
+}
+.mail > p {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  max-width: 44rem;
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.25rem 0 1rem;
+}
+.tabs button {
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  font: 500 1rem/1.3 var(--sans);
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+}
+.tabs button[aria-selected='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.tabs button:hover {
+  background: var(--yellow);
+  color: var(--ink);
+}
+.tabs button:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+.panel > p {
+  margin: 0 0 0.75rem;
+  max-width: 44rem;
+}
+.scroll {
+  overflow-x: auto;
+}
+.mail table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.mail th,
+.mail td {
+  text-align: left;
+  padding: 0.6rem 1.25rem 0.6rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  vertical-align: top;
+  white-space: nowrap;
+}
+.mail th:last-child,
+.mail td:last-child {
+  padding-right: 0;
+}
+.mail thead th {
+  font: 400 0.8125rem/1.4 var(--mono);
+  border-bottom: 2px solid var(--ink);
+  white-space: normal;
+}
+.mail thead th.w {
+  width: 10.5rem;
+}
+.mail tbody th {
+  font-weight: 500;
+}
+.mail td:last-child {
+  font-weight: 500;
+}
+.fine {
+  font: 400 0.6875rem/1.5 var(--sans);
+  color: #4a4a4a;
+  margin: 1rem 0 0;
+}
+b .bl,
+strong .bl {
+  font-weight: 700;
+  font-synthesis-weight: auto;
+}
+.pron {
+  font-size: 0.75em;
+  color: #4a4a4a;
+  font-weight: 400;
+}
+.sources {
+  font: 400 0.8125rem/1.5 var(--mono);
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+  margin-top: 1.75rem;
+  padding-top: 0.75rem;
+}
+.sources ol {
+  padding-left: 1.25rem;
+  margin: 0.25rem 0 0;
+}
+.cite {
+  font: 400 0.75em/1 var(--mono);
+  vertical-align: 0.4em;
+  text-decoration: none;
+  margin-left: 0.1em;
+}
+.prices .note {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 0.4rem 0.4rem 0 var(--ink);
+  margin: 2rem 0 0;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  padding: 1.25rem 1.5rem;
+}
+.who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1.5rem clamp(1.25rem, 4vw, 3rem);
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+}
+.who > div {
+  flex: 1 1 11rem;
+  min-width: 0;
+}
+.who img {
+  display: block;
+  flex: none;
+  width: clamp(5.5rem, 24vw, 10rem);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  box-shadow: 0.4rem 0.4rem 0 var(--pink);
+}
+.who h2 {
+  margin: 0 0 0.75rem;
+  color: var(--blue);
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  line-height: 1.08;
+}
+.who h2 .bl {
+  color: var(--ink);
+}
+.who p {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  max-width: 40rem;
+}
+.register {
+  background: var(--yellow);
+  padding-block: clamp(3.5rem, 8vw, 6rem);
+}
+.register h2 {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  line-height: 1.06;
+  margin: 0 0 0.75rem;
+}
+.register .anchor {
+  color: var(--ink);
+}
+.register .lede {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin: 0 0 2rem;
+  max-width: 36rem;
+}
+.small {
+  font: 400 0.875rem/1.5 var(--mono);
+  margin: 0;
+}
+.reg-go {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin: 0 0 1.5rem;
+}
+.reg-addr {
+  font: 400 1rem/1.4 var(--mono);
+  user-select: all;
+  overflow-wrap: anywhere;
+}
+dialog {
+  border: 0;
+  padding: 0;
+  width: min(48rem, calc(100% - 2rem));
+  max-width: none;
+  max-height: 92vh;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0.4rem 0.4rem 0 var(--pink);
+  overflow: auto;
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0.85rem 0.85rem 0 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 0.2rem 0.2rem 0 var(--pink);
+  cursor: pointer;
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background-color 0.15s ease;
+}
+.close svg {
+  display: block;
+  width: 1.15rem;
+  height: 1.15rem;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.close:hover,
+.close:focus-visible {
+  background: var(--yellow);
+  transform: translate(-0.1rem, -0.1rem);
+  box-shadow: 0.32rem 0.32rem 0 var(--pink);
+  outline: none;
+}
+.close:hover svg,
+.close:focus-visible svg {
+  transform: rotate(90deg);
+}
+.close:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+.close:active {
+  transform: translate(0.15rem, 0.15rem);
+  box-shadow: 0 0 0 var(--pink);
+}
+.sheet {
+  padding: 2rem 1.5rem 2.5rem;
+}
+.sheet h2 {
+  color: var(--blue);
+  margin: 0 0 1rem;
+  padding-right: 3.5rem;
+}
+.sheet h3 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 500;
+  margin: 1.75rem 0 0.35rem;
+  scroll-margin-top: 4rem;
+}
+.sheet .big {
+  font-size: 1.5rem;
+  line-height: 1.35;
+  font-weight: 500;
+}
+.sheet .end {
+  margin: 2rem 0 0;
+}
+.sheet .choices {
+  padding-left: 1.25rem;
+  margin: 0.25rem 0 1rem;
+}
+.sheet .choices li {
+  margin-bottom: 0.6rem;
+}
+.sheet .person {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+.sheet .person img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  box-shadow: 0.3rem 0.3rem 0 var(--pink);
+}
+.sheet .person h3 {
+  margin-top: 0;
+}
+.role {
+  font: 400 0.875rem/1.4 var(--mono);
+  margin: 0 0 0.75rem;
+}
+.frame {
+  border: 2px solid var(--pink);
+  padding: 0 0.75rem 0.75rem;
+  margin-top: 2rem;
+}
+.frame-label {
+  display: table;
+  font: 400 0.875rem/1.4 var(--mono);
+  background: var(--paper);
+  padding: 0.25rem 0.5rem;
+  margin: -0.9rem 0 0.75rem;
+}
+.lay {
+  display: grid;
+}
+.lay .name {
+  padding: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  font-weight: 500;
+}
+.lay .what {
+  padding: 1rem;
+  background: var(--paper);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+.lay .what p {
+  margin: 0 0 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.lay .what p:last-child {
+  margin: 0;
+}
+.lay b {
+  font-weight: 500;
+}
+.n-read {
+  background: var(--paper);
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+.n-tools {
+  background: var(--yellow);
+  outline: 2px dashed var(--ink);
+  outline-offset: -2px;
+}
+.n-site {
+  background: var(--pink);
+}
+.n-plat {
+  background: var(--blue);
+  color: var(--paper);
+}
+.n-infra {
+  background: var(--ink);
+  color: var(--paper);
+}
+.key {
+  font: 400 0.875rem/1.5 var(--mono);
+  margin: 0.75rem 0 0;
+}
+@media (min-width: 44rem) {
+  .lay {
+    grid-template-columns: 12rem 1fr;
+  }
+  .sheet .person {
+    grid-template-columns: 8rem 1fr;
+  }
+}
+@media (min-width: 60rem) {
+  .beat,
+  .band .inner {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
+    align-items: start;
+  }
+  .price-grid {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 2rem;
+  }
+}
+@media (max-width: 44rem) {
+  dialog {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    box-shadow: none;
+  }
+}
+@media (max-width: 30rem) {
+  .logo {
+    --h: 1.9rem;
+  }
+  .top .btn {
+    padding: 0.55rem 1rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .logo svg,
+  .top .inner,
+  .top,
+  .close,
+  .close svg {
+    transition: none;
+  }
+  .close:hover svg,
+  .close:focus-visible svg {
+    transform: none;
+  }
+}
