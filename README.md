@@ -40,4 +40,5 @@ Copy `.env.example` to `.env` for the SMTP settings. The end-to-end suite stubs 
   installed, so a build needs no registry credential.
 - The content was ported from the static launch pages and is compared with them, text for text, by
   `tests/parity.spec.ts` against the copies in `tests/fixtures/reference/`.
-- `deploy/compose.yml` is the Compose stack for app1, on port 8085.
+- The Compose stack that runs the image on app1 lives in `branchLeft/shared-infra`, in the
+  `publicpress_website_app1` Ansible role, which owns its port (8081) and its env file.

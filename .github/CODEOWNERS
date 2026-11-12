@@ -7,8 +7,8 @@
 # standards line at the foot of this file.
 **/CODEOWNERS            @branchLeft/branchleft-admin
 
-# Deploy: the compose stack on app1, the image that CI builds and pins there,
-# and the build context that goes into that image.
+# Deploy: the image that CI builds and pins on app1, and the build context that
+# goes into that image.
 /deploy/                 @branchLeft/branchleft-admin
 /Dockerfile              @branchLeft/branchleft-admin
 /.dockerignore           @branchLeft/branchleft-admin
