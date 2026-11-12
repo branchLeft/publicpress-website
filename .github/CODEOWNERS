@@ -35,11 +35,13 @@
 /tsconfig.json           @branchLeft/branchleft-admin
 /package.json            @branchLeft/branchleft-admin
 /pnpm-workspace.yaml     @branchLeft/branchleft-admin
+/react-router.config.ts  @branchLeft/branchleft-admin
+/vite.config.ts          @branchLeft/branchleft-admin
 
-# Standards template lines (SYNC-1): these six stay the final lines of this file.
+# Standards template lines (SYNC-1, standards v0.8.8): these five stay the final
+# lines of this file.
 /.standardsignore        @branchLeft/branchleft-admin
 /.standards.mode         @branchLeft/branchleft-admin
 /.docs-lint*             @branchLeft/branchleft-admin
-/tools/floors.tsv        @branchLeft/branchleft-admin
 /.standards-db-tooling   @branchLeft/branchleft-admin
 /.github/                @branchLeft/branchleft-admin

@@ -373,8 +373,12 @@ h3:hover .anchor,
 .scroll {
   overflow-x: auto;
 }
+/* Equal columns at every width, so the three tabs line up and no header can
+   push the amounts apart; below 34rem the table scrolls inside the card. */
 .mail table {
   width: 100%;
+  min-width: 34rem;
+  table-layout: fixed;
   border-collapse: collapse;
   font-variant-numeric: tabular-nums;
 }
@@ -384,7 +388,6 @@ h3:hover .anchor,
   padding: 0.6rem 1.25rem 0.6rem 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   vertical-align: top;
-  white-space: nowrap;
 }
 .mail th:last-child,
 .mail td:last-child {
@@ -394,9 +397,6 @@ h3:hover .anchor,
   font: 400 0.8125rem/1.4 var(--mono);
   border-bottom: 2px solid var(--ink);
   white-space: normal;
-}
-.mail thead th.w {
-  width: 10.5rem;
 }
 .mail tbody th {
   font-weight: 500;
