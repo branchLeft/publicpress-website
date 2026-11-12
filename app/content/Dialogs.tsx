@@ -1,0 +1,461 @@
+import type * as React from 'react';
+import { MovingContent } from './MovingContent';
+import headshot from '~/assets/images/headshot-320.webp?url';
+import { BlMarkLarge } from './marks';
+import { ENTRY_TIER } from './tokens';
+import { AnchoredHeading } from '~/components/AnchoredHeading';
+import { Popup, RegisterLink } from '~/components/Popup';
+
+export function Dialogs(): React.JSX.Element {
+  return (
+    <>
+      <Popup id="ghost" titleId="t-ghost">
+        <h2 id="t-ghost">What is Ghost?</h2>
+        <p className="big">
+          Ghost is publishing software that connects you directly with your readers, with no
+          platform in between.
+        </p>
+        <AnchoredHeading as="h3" id="ghost-publish">
+          Publishing
+        </AnchoredHeading>
+        <p>
+          A clean editor for articles, images and video, with your own design, sections and authors.
+          <sup>
+            <a href="#src-g2">2</a>
+          </sup>
+        </p>
+        <AnchoredHeading as="h3" id="ghost-newsletters">
+          Newsletters
+        </AnchoredHeading>
+        <p>
+          Any article can go straight to your readers' inboxes, and readers sign up on your own
+          site.
+          <sup>
+            <a href="#src-g3">3</a>
+          </sup>
+        </p>
+        <AnchoredHeading as="h3" id="ghost-members">
+          Members and payments
+        </AnchoredHeading>
+        <p>
+          Free and paid members, with subscriptions taken through your own Stripe account. Ghost
+          takes no cut: you pay only Stripe's usual fees.
+          <sup>
+            <a href="#src-g3">3</a>
+          </sup>{' '}
+          We're planning to add an EU-based payments provider, better aligned with our values, soon
+          after PublicPress launches.
+        </p>
+        <AnchoredHeading as="h3" id="ghost-network">
+          The social web
+        </AnchoredHeading>
+        <p>
+          People on federated social apps can follow your publication, and like, reply to or repost
+          what you publish.
+          <sup>
+            <a href="#src-g4">4</a>
+          </sup>
+        </p>
+        <AnchoredHeading as="h3" id="ghost-yours">
+          Yours to keep
+        </AnchoredHeading>
+        <p>
+          Your articles and your members list export whenever you want, in Ghost's own format.
+          <sup>
+            <a href="#src-g3">3</a>
+          </sup>
+          <sup>
+            <a href="#src-g5">5</a>
+          </sup>
+        </p>
+        <AnchoredHeading as="h3" id="ghost-publicpress">
+          Where PublicPress comes in
+        </AnchoredHeading>
+        <p>
+          Ghost is software, and someone has to run it. PublicPress runs it for you: the servers,
+          upgrades, backups, mail and support, on independent infrastructure.
+        </p>
+        <AnchoredHeading as="h3" id="ghost-open">
+          Open source, and source-available
+        </AnchoredHeading>
+        <p>
+          It is open source, under the MIT licence,
+          <sup>
+            <a href="#src-g1">1</a>
+          </sup>{' '}
+          and developed by the Ghost Foundation, a non-profit organisation.
+          <sup>
+            <a href="#src-g2">2</a>
+          </sup>{' '}
+          Anyone can read the code, and nobody can take it away from you. All code for PublicPress
+          is source-available under the PolyForm Shield License 1.0.0, so you know exactly what
+          technology you're running on.
+        </p>
+        <p>
+          <a href="https://branchleft.co.uk/blog/why-publicpress-is-source-available">
+            Why is PublicPress not fully open-source?
+          </a>
+        </p>
+        <div className="sources">
+          <span>Sources</span>
+          <ol>
+            <li id="src-g1">
+              <a href="https://github.com/TryGhost/Ghost/blob/main/LICENSE">
+                Ghost's licence file, on GitHub
+              </a>
+            </li>
+            <li id="src-g2">
+              <a href="https://en.wikipedia.org/wiki/Ghost_(blogging_platform)">
+                Ghost (blogging platform), Wikipedia
+              </a>
+            </li>
+            <li id="src-g3">
+              <a href="https://docs.ghost.org/members">
+                Memberships, Ghost's developer documentation
+              </a>
+            </li>
+            <li id="src-g4">
+              <a href="https://techcrunch.com/2025/08/05/substack-rival-ghost-connects-to-the-open-social-web-with-its-latest-public-release">
+                Ghost connects to the open social web, TechCrunch, 5 August 2025
+              </a>
+            </li>
+            <li id="src-g5">
+              <a href="https://docs.ghost.org/migration/ghost">
+                Exporting a Ghost site, Ghost's developer documentation
+              </a>
+            </li>
+          </ol>
+        </div>
+        <p className="end">
+          <RegisterLink />
+        </p>
+      </Popup>
+      <Popup id="included" titleId="t-included">
+        <h2 id="t-included">Included on every paid plan</h2>
+        <AnchoredHeading as="h3" id="upgrades">
+          Upgrades and maintenance
+        </AnchoredHeading>
+        <p>
+          Ghost's patch and minor releases go on automatically, and we handle major versions for
+          you. You never touch a server.
+        </p>
+        <AnchoredHeading as="h3" id="backups">
+          Backups
+        </AnchoredHeading>
+        <p>
+          Taken every night, encrypted with your site's own key, and kept in two places apart from
+          your live site.
+        </p>
+        <AnchoredHeading as="h3" id="reliability">
+          Reliability
+        </AnchoredHeading>
+        <p>
+          Releases do not take your site offline and they roll back if anything goes wrong. Every
+          site is isolated from every other, watched continuously. PublicPress system status is
+          reported on a public page in real-time, and your site's status is reported in the client
+          portal.
+        </p>
+        <AnchoredHeading as="h3" id="newsletters">
+          Newsletters, sent your way
+        </AnchoredHeading>
+        <p>Choose how your newsletters reach your readers:</p>
+        <ul className="choices">
+          <li>
+            <b>
+              <span className="bl">branchLeft</span>'s sovereign mail server.
+            </b>{' '}
+            Built in. Our own server, on our own independent infrastructure, with nothing else to
+            sign up to.
+          </li>
+          <li>
+            <b>Sweego, an EU-based email provider.</b> Higher-reliability mail delivery from an
+            established sender, without leaving the EU, at additional cost.
+          </li>
+          <li>
+            <b>Your own Mailgun plan.</b> Ghost's newsletters were designed around Mailgun, so if
+            you already have a plan you can keep it.
+          </li>
+        </ul>
+        <p>
+          Why three? Each makes a different trade between independence, delivery reliability and
+          what you already use, and the right one depends on your newsroom.
+        </p>
+        <AnchoredHeading as="h3" id="integrations">
+          Integrations
+        </AnchoredHeading>
+        <p>
+          We will build first-class support for UK-based technologies, with no extra charge for the
+          integration. You are free to connect anything you like through Ghost's integrations API.
+          And if you need something that does not exist yet, we can build bespoke integrations and
+          code for you.
+        </p>
+        <AnchoredHeading as="h3" id="content-safety">
+          Content safety
+        </AnchoredHeading>
+        <p>
+          Every uploaded image is scanned and signed before it can appear on your site. Images are
+          checked for harmful content using Arachnid (and other methods TBD), to protect the
+          security of our platform and to promote a safer internet. Automated moderation for
+          comments (and optionally article text) follows after launch.
+        </p>
+        <AnchoredHeading as="h3" id="readers">
+          Respect for your readers
+        </AnchoredHeading>
+        <p>
+          No non-essential cookies on a default site, so no consent banner between your readers and
+          your journalism. Ghost's analytics is off by default for your readers' privacy, and you
+          can turn it on for your site at no extra cost.
+        </p>
+        <AnchoredHeading as="h3" id="portal">
+          A client portal to run it from
+        </AnchoredHeading>
+        <p>Your domain, plan, billing, configuration... all in one place.</p>
+        <AnchoredHeading as="h3" id="leave">
+          Freedom to leave
+        </AnchoredHeading>
+        <p>
+          Ghost's own export gives you your content, members and settings whenever you want them.
+        </p>
+        <AnchoredHeading as="h3" id="support">
+          Support
+        </AnchoredHeading>
+        <p>
+          {ENTRY_TIER} includes support by email, access to our client portal and documentation.
+          Professional adds priority support, guided onboarding and 1 hour of hands-on help each
+          month.
+        </p>
+        <p className="end">
+          <RegisterLink />
+        </p>
+      </Popup>
+      <Popup id="yours" titleId="t-yours">
+        <h2 id="t-yours">Your site, your way</h2>
+        <AnchoredHeading as="h3" id="standard-theme">
+          A standard theme with your brand
+        </AnchoredHeading>
+        <p>
+          Ghost has a library of open-source and configurable themes which are available in your
+          Ghost site via PublicPress. We provide support for picking the right one for you in the
+          onboarding journey.
+        </p>
+        <AnchoredHeading as="h3" id="bespoke-theme">
+          A bespoke theme that's authentically your identity
+        </AnchoredHeading>
+        <p>Designed and built around who you are, at our bespoke rate.</p>
+        <AnchoredHeading as="h3" id="address">
+          Your own address
+        </AnchoredHeading>
+        <p>
+          Bring your own domain, or take a publicpress.co.uk subdomain, e.g.
+          mynewsroom.publicpress.co.uk.
+        </p>
+        <p className="end">
+          <RegisterLink />
+        </p>
+      </Popup>
+      <Popup id="moving" titleId="t-moving">
+        <h2 id="t-moving">Moving to PublicPress</h2>
+        <MovingContent />
+        <p className="end">
+          <RegisterLink />
+        </p>
+      </Popup>
+      <Popup id="built" titleId="t-built">
+        <h2 id="t-built">How PublicPress is built</h2>
+        <p>
+          Each layer, from your readers down to the electricity, what it does and why it is there.
+        </p>
+        <div className="frame">
+          <p className="frame-label">
+            All of it is run for independent journalism. Any surplus goes back in.
+          </p>
+          <div className="lay">
+            <div className="name n-read">Your readers and members</div>
+            <div className="what">
+              <p>
+                <b>What:</b> your sign-up, member and supporter records.
+              </p>
+              <p>
+                <b>Why:</b> they belong to you, and Ghost lets you export your members and posts
+                whenever you want.
+              </p>
+            </div>
+          </div>
+          <div className="lay">
+            <div className="name n-tools">Apps, discovery, supporter tools</div>
+            <div className="what">
+              <p>
+                <b>What:</b> shared tools being built across the sector by others, and we will
+                likely build them too.
+              </p>
+              <p>
+                <b>Why:</b> Ghost's APIs and webhooks are enabled on every site, so these connect
+                with nothing for you to install or run.
+              </p>
+            </div>
+          </div>
+          <div className="lay">
+            <div className="name n-site">Your Ghost site</div>
+            <div className="what">
+              <p>
+                <b>What:</b> publishing, newsletters, paid memberships, your domain.
+              </p>
+              <p>
+                <b>Why:</b> every Ghost feature, working as Ghost intended, including the two that
+                take extra work to run. Ghost's analytics is off by default for your readers'
+                privacy, and you can turn it on for your site at no extra cost. The Network lets
+                people follow and reply to your publication from the wider social web. Paid
+                memberships use your own Stripe account, because Ghost requires it, and we plan to
+                add an EU-based payments provider soon after launch.
+              </p>
+            </div>
+          </div>
+          <div className="lay">
+            <div className="name n-plat">PublicPress</div>
+            <div className="what">
+              <p>
+                <b>What:</b> upgrades, backups, mail, monitoring, content safety, isolation, support
+                and your portal.
+              </p>
+              <p>
+                <b>Why:</b> so nobody in your newsroom has to be a systems administrator. The source
+                is public for anyone to read, and the platform is continually hardened and
+                attack-tested in-house.
+              </p>
+            </div>
+          </div>
+          <div className="lay">
+            <div className="name n-infra">Independent infrastructure</div>
+            <div className="what">
+              <p>
+                <b>What:</b> hosting, storage, database and mail in the EU, with no AWS, Google
+                Cloud or Azure.
+              </p>
+              <p>
+                <b>Why:</b> your journalism should not depend on the companies it may need to report
+                on. Your live site runs in German data centres that Hetzner powers from renewable
+                sources. So that your backups survive even if Hetzner has a catastrophe, a second
+                copy goes to OVHcloud in London, locked so that nobody, including us, can change or
+                delete it for 14 days. One exception to residency: our image check sends Arachnid a
+                fingerprint of an image, never the image itself, and the fingerprint cannot be used
+                to reconstruct an image.
+              </p>
+            </div>
+          </div>
+        </div>
+        <p className="end">
+          <RegisterLink />
+        </p>
+      </Popup>
+      <Popup id="why" titleId="t-why">
+        <h2 id="t-why">Why we are doing this</h2>
+        <p className="big">Nobody in a newsroom should have to be a systems administrator.</p>
+        <p>
+          The average independent news outlet in the UK has about two full-time-equivalent staff and
+          £62,000 a year coming in (
+          <a href="https://pressgazette.co.uk/publishers/pinf-independent-publishers-2024-revenue-falls/">
+            PINF Index 2024, reported by Press Gazette
+          </a>
+          ). Your website, mailing list and membership system still have to work every day, and
+          between them they hold the most valuable thing you have: a direct relationship with your
+          readers.
+        </p>
+        <p>
+          PublicPress exists to support the mission of independent journalists and outlets,{' '}
+          <b>not to generate profit</b>. Any surplus goes back into the platform and the people who
+          run it.
+        </p>
+        <AnchoredHeading as="h3" id="way-in">
+          Removing the barrier to entry
+        </AnchoredHeading>
+        <p>
+          Most newsrooms have no technical team. PublicPress gives you a modern, open publishing
+          stack, managed by experts aligned with the mission to bring high-quality reporting on the
+          topics that matter most, from hyper-local issues to journalism that speaks truth to power.
+        </p>
+        <AnchoredHeading as="h3" id="put-back">
+          What we put back
+        </AnchoredHeading>
+        <p>
+          The source is public, and what we learn running this goes back to the sector. We keep
+          building after launch, and are refining a roadmap that tackles the unique problems faced
+          in the UK by independent journalists and newsrooms.
+        </p>
+        <p className="end">
+          <RegisterLink />
+        </p>
+      </Popup>
+      <Popup id="everyone" titleId="t-everyone">
+        <h2 id="t-everyone">Ghost hosting for everyone</h2>
+        <p className="big">
+          We built PublicPress for journalism. It is open to anyone who wants a Ghost site done
+          well.
+        </p>
+        <p>
+          Writers, clubs, charities, small businesses, hobbyists, bloggers: you get the same
+          upgrades, backups, reliability and support as a newsroom.
+        </p>
+        <p>
+          <a href="https://publicpress.co.uk/ghost-hosting">
+            Managed Ghost hosting for writers, charities and small businesses
+          </a>
+        </p>
+        <p>
+          By choosing PublicPress, you are helping to contribute towards our mission of supporting
+          independent journalism in the UK.
+        </p>
+        <p className="end">
+          <RegisterLink />
+        </p>
+      </Popup>
+      <Popup id="about" titleId="t-about">
+        <h2 id="t-about">
+          <span className="bl">
+            <span className="blm">
+              <BlMarkLarge />
+            </span>
+            branchLeft
+          </span>{' '}
+          and its founder
+        </h2>
+        <p>
+          <span className="bl">branchLeft</span> is a UK company building technology for people &
+          planet. The name reflects the subversion of the capitalistic model typically associated
+          with tech. Extractive and exploitative practices are not a prerequisite for success, and
+          we're here to prove it.
+        </p>
+        <p>
+          We don't answer to any external investors or private equity, and never will. We're
+          committed to becoming a formal <b>non-profit worker's cooperative</b> as soon as we start
+          scaling.
+        </p>
+        <div className="person">
+          <img src={headshot} alt="" width="128" height="128" />
+          <div>
+            <AnchoredHeading as="h3" id="founder">
+              Robert Murray <span className="pron">(they/them)</span>
+            </AnchoredHeading>
+            <p className="role">Founder, Director & Principal Engineer</p>
+            <p>
+              Our founder is the technical and ideological driving force behind{' '}
+              <span className="bl">branchLeft</span>.
+            </p>
+            <p>
+              With a first-class Computer Science MEng from the University of Warwick, and over a
+              decade of experience in software engineering and technical project management, they
+              bring a combination of breadth and depth of expertise to every project.
+            </p>
+            <p>
+              Robert's experience ranges from the bleeding-edge of emerging AI technology, to
+              highly-regulated industries such as medicines and insurance, to large-scale enterprise
+              and customer-facing systems.
+            </p>
+          </div>
+        </div>
+        <p className="end">
+          <RegisterLink />
+        </p>
+      </Popup>
+    </>
+  );
+}

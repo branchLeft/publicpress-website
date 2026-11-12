@@ -1,0 +1,23 @@
+/*
+ * A pop-up address opened without scripting: the server renders the dialog open
+ * but non-modal, so the browser's own modal styling (fixed, centred, backdrop)
+ * does not apply. This gives it the same position and scrim. Once the page has
+ * hydrated the dialog is reopened as a true modal and none of this matches.
+ */
+dialog[open]:not(:modal) {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  height: fit-content;
+  z-index: 30;
+  box-shadow:
+    0.4rem 0.4rem 0 var(--pink),
+    0 0 0 100vmax rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 44rem) {
+  dialog[open]:not(:modal) {
+    height: 100%;
+    box-shadow: none;
+  }
+}
