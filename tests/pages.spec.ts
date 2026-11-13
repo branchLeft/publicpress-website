@@ -56,9 +56,12 @@ test('fonts and the headshot are hashed files, not data: URIs', async ({ page })
   await page.evaluate(() => document.fonts.ready);
 
   expect(requested.filter((path) => /^\/assets\/jost-.+\.woff2$/.test(path))).not.toHaveLength(0);
-  expect(
-    requested.filter((path) => /^\/assets\/headshot-320-.+\.webp$/.test(path))
-  ).not.toHaveLength(0);
+  // The headshot loads lazily, so it is fetched only once it nears the viewport.
+  const headshot = page.waitForResponse((response) =>
+    /^\/assets\/headshot-320-.+\.webp$/.test(new URL(response.url()).pathname)
+  );
+  await page.locator('main img[src*="headshot-320-"]').first().scrollIntoViewIfNeeded();
+  await headshot;
   const html = (await (await page.request.get('/')).text()).toLowerCase();
   expect(html).not.toContain('data:font');
   expect(html).not.toContain('base64');
