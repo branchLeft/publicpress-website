@@ -59,6 +59,37 @@ test('headings gain "#" links once the page has hydrated', async ({ page }) => {
   await expect(page.locator('#ghost-members .anchor')).toHaveAttribute('href', '#ghost-members');
 });
 
+test('a "#" link shows only on hover, keyboard focus or as the target', async ({ page }) => {
+  await page.goto('/');
+  await hydrated(page);
+  const heading = page.locator('#looked-after');
+  const anchor = heading.locator('.anchor');
+  const opacity = () => anchor.evaluate((node) => getComputedStyle(node).opacity);
+  await expect.poll(opacity).toBe('0');
+
+  await heading.hover();
+  await expect.poll(opacity).toBe('1');
+  await page.mouse.move(0, 0);
+  await expect.poll(opacity).toBe('0');
+
+  await anchor.focus();
+  await page.keyboard.press('Shift+Tab');
+  await page.keyboard.press('Tab');
+  await expect(anchor).toBeFocused();
+  await expect.poll(opacity).toBe('1');
+  await anchor.blur();
+
+  await page.goto('/#looked-after');
+  await hydrated(page);
+  await page.mouse.move(0, 0);
+  await expect.poll(opacity).toBe('1');
+  await expect
+    .poll(() =>
+      page.locator('#what-is-ghost .anchor').evaluate((node) => getComputedStyle(node).opacity)
+    )
+    .toBe('0');
+});
+
 test('the mail tabs switch panels by click and by arrow keys', async ({ page }) => {
   await page.goto('/');
   await hydrated(page);
