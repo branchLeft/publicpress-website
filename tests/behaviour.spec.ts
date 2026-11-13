@@ -13,6 +13,88 @@ test('the header compacts past 80px of scroll and relaxes at the top', async ({ 
   await expect(header).not.toHaveClass(/compact/);
 });
 
+for (const viewport of [
+  { width: 1280, height: 720 },
+  { width: 375, height: 812 },
+]) {
+  test(`at ${viewport.width}px the header holds still with the scroll parked at its edges`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('/');
+    await hydrated(page);
+    const header = page.locator('header.top');
+    const relaxedHeight = (await header.boundingBox())?.height;
+
+    // Park the scroll at each position near the two thresholds, coming from
+    // above and from below, let any transition finish, then watch 20 frames.
+    // A header that moves the page when it compacts sends the scroll back over
+    // the threshold here, and its state and the scroll change frame to frame.
+    const unsteady = await page.evaluate(async () => {
+      const frame = (): Promise<void> =>
+        new Promise((resolve) => requestAnimationFrame(() => resolve()));
+      const top = document.querySelector('header.top');
+      if (top === null) return ['no header'];
+      const found: string[] = [];
+      for (const from of [0, 400]) {
+        for (const y of [36, 44, 70, 80, 81, 84, 90, 100]) {
+          window.scrollTo(0, from);
+          for (let i = 0; i < 5; i++) await frame();
+          window.scrollTo(0, y);
+          for (let i = 0; i < 30; i++) await frame();
+          const seen = new Set<string>();
+          for (let i = 0; i < 12; i++) {
+            await frame();
+            seen.add(`${top.className} at ${Math.round(window.scrollY)}`);
+          }
+          if (seen.size > 1) found.push(`from ${from} to ${y}: ${[...seen].join(' / ')}`);
+        }
+      }
+      return found;
+    });
+    expect(unsteady).toEqual([]);
+
+    // The header's box is the same height compact or not, so compacting moves nothing.
+    await page.evaluate(() => window.scrollTo(0, 400));
+    await expect(header).toHaveClass(/compact/);
+    expect((await header.boundingBox())?.height).toBe(relaxedHeight);
+  });
+}
+
+test('the header compacts past 80px and relaxes only back above 40px', async ({ page }) => {
+  await page.goto('/');
+  await hydrated(page);
+  const header = page.locator('header.top');
+  await page.evaluate(() => window.scrollTo(0, 60));
+  await expect(header).not.toHaveClass(/compact/);
+  await page.evaluate(() => window.scrollTo(0, 100));
+  await expect(header).toHaveClass(/compact/);
+  await page.evaluate(() => window.scrollTo(0, 60));
+  await expect(header).toHaveClass(/compact/);
+  await page.evaluate(() => window.scrollTo(0, 20));
+  await expect(header).not.toHaveClass(/compact/);
+});
+
+test('compact, the strip under the bar lets clicks through to the page', async ({ page }) => {
+  await page.goto('/');
+  await hydrated(page);
+  await page.evaluate(() => window.scrollTo(0, 400));
+  const header = page.locator('header.top');
+  await expect(header).toHaveClass(/compact/);
+  await expect(header.getByRole('link', { name: 'Register interest' })).toBeVisible();
+  const box = await header.boundingBox();
+  if (box === null) throw new Error('no header box');
+  // Polled: the bar slides up over 0.4s.
+  await expect
+    .poll(() =>
+      page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.closest('header')?.id ?? 'page', [
+        box.x + 4,
+        box.y + box.height - 2,
+      ] as const)
+    )
+    .toBe('page');
+});
+
 test('the header "Register interest" button links to #register', async ({ page }) => {
   await page.goto('/ghost-hosting');
   await hydrated(page);

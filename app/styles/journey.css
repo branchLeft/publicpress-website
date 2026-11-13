@@ -44,12 +44,27 @@ dialog:focus {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
+/* The header's own box keeps one height in both states. Shrinking it would move
+   the page under it, the browser would move the scroll to keep the reader's
+   place, and that can carry the scroll back over the compact threshold: the
+   header then flickers between states. So compacting moves only paint: the
+   bar (::before) slides up by --shrink and the contents by half of it, both as
+   transforms. */
 .top {
+  --shrink: 1.3rem;
   position: sticky;
   top: 0;
   z-index: 20;
+}
+.top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: var(--paper);
-  transition: box-shadow 0.3s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.3s ease;
 }
 .top .inner {
   display: flex;
@@ -57,13 +72,23 @@ dialog:focus {
   align-items: center;
   gap: 1rem;
   padding-block: 1.25rem;
-  transition: padding 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.top.compact {
+.top.compact::before {
+  transform: translateY(calc(-1 * var(--shrink)));
   box-shadow: 0 2px 0 var(--ink);
 }
 .top.compact .inner {
-  padding-block: 0.6rem;
+  transform: translateY(calc(-0.5 * var(--shrink)));
+}
+/* Compact, the strip of the box below the bar is see-through: clicks there
+   reach the page. The bar and the two links still take them. */
+.top.compact {
+  pointer-events: none;
+}
+.top.compact::before,
+.top.compact a {
+  pointer-events: auto;
 }
 .logo {
   --h: 2.6rem;
@@ -731,7 +756,7 @@ dialog::backdrop {
   .logo,
   .logo svg,
   .top .inner,
-  .top,
+  .top::before,
   .close,
   .close svg {
     transition: none;
