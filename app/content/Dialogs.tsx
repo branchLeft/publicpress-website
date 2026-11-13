@@ -92,7 +92,7 @@ export function Dialogs(): React.JSX.Element {
           technology you're running on.
         </p>
         <p>
-          <a href="https://branchleft.co.uk/blog/why-publicpress-is-source-available">
+          <a href="https://blog.branchleft.co.uk/why-is-publicpress-source-available-not-open-source/">
             Why is PublicPress not fully open-source?
           </a>
         </p>
