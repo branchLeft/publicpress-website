@@ -9,7 +9,7 @@ import { AnchoredHeading } from './AnchoredHeading';
 import { DateNote } from './DateNote';
 import { MoreButton, Popup, PopupProvider, RegisterLink } from './Popup';
 import { RegisterForm } from './RegisterForm';
-import { SiteHeader } from './SiteHeader';
+import { COMPACT_AFTER_PX, RELAX_BEFORE_PX, SiteHeader, nextCompact } from './SiteHeader';
 
 const GHOST = { page: 'ghost-hosting', renderedAt: 1 } as const;
 
@@ -186,6 +186,16 @@ describe('small components', () => {
     expect(html).toContain('<header class="top" id="top">');
     expect(html).toContain('<a class="btn" href="#register">Register interest</a>');
     expect(html).toContain('aria-label="PublicPress, back to top"');
+  });
+
+  it('the header compacts past 80px and, once compact, relaxes only above 40px', () => {
+    expect(nextCompact(false, COMPACT_AFTER_PX)).toBe(false);
+    expect(nextCompact(false, COMPACT_AFTER_PX + 1)).toBe(true);
+    expect(nextCompact(true, COMPACT_AFTER_PX)).toBe(true);
+    expect(nextCompact(true, RELAX_BEFORE_PX)).toBe(true);
+    expect(nextCompact(true, RELAX_BEFORE_PX - 1)).toBe(false);
+    expect(nextCompact(false, 60)).toBe(false);
+    expect(nextCompact(true, 60)).toBe(true);
   });
 
   it('headings carry no "#" link until the page has hydrated', async () => {
