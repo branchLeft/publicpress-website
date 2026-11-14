@@ -242,15 +242,15 @@ sup a {
   opacity: 0;
   transition: opacity 0.15s;
 }
+/* Hidden until wanted: shown on hover, on keyboard focus, and on the heading the
+   address points at. No touch-only fallback, so a phone shows none until a
+   heading is the target. */
 h2:hover .anchor,
 h3:hover .anchor,
+h2:target .anchor,
+h3:target .anchor,
 .anchor:focus-visible {
   opacity: 1;
-}
-@media (hover: none) {
-  .anchor {
-    opacity: 0.45;
-  }
 }
 .more {
   background: none;

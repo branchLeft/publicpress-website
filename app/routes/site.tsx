@@ -6,6 +6,7 @@ import { SiteContext } from '~/components/SiteContext';
 import { GhostHostingBody } from '~/content/GhostHostingBody';
 import { JourneyBody } from '~/content/JourneyBody';
 import { PAGES, canonicalUrl, pageKindForPath } from '~/lib/pages';
+import { SITE_NAME, isKnownPath, structuredData } from '~/lib/seo';
 import { submitRegister } from '~/lib/register.server';
 
 /**
@@ -14,8 +15,10 @@ import { submitRegister } from '~/lib/register.server';
  * closes pop-ups (which navigate), so the loader never revalidates.
  */
 export async function loader({ request }: Route.LoaderArgs) {
+  const { pathname } = new URL(request.url);
   return {
-    page: pageKindForPath(new URL(request.url).pathname),
+    page: pageKindForPath(pathname),
+    indexable: isKnownPath(pathname),
     renderedAt: Date.now(),
   };
 }
@@ -34,11 +37,19 @@ export function meta({ loaderData }: Route.MetaArgs) {
     { title },
     { name: 'description', content: description },
     { tagName: 'link', rel: 'canonical', href: canonical },
+    // A path that is neither a page nor a pop-up still shows the journey, but is
+    // kept out of search results so it never competes with the home page.
+    ...(loaderData?.indexable === false ? [{ name: 'robots', content: 'noindex, follow' }] : []),
+    { property: 'og:site_name', content: SITE_NAME },
+    { property: 'og:locale', content: 'en_GB' },
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
     { property: 'og:url', content: canonical },
     { property: 'og:type', content: 'website' },
     { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { 'script:ld+json': structuredData(kind) },
   ];
 }
 

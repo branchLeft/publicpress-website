@@ -430,7 +430,7 @@ export function Dialogs(): React.JSX.Element {
           scaling.
         </p>
         <div className="person">
-          <img src={headshot} alt="" width="128" height="128" />
+          <img src={headshot} alt="" width="128" height="128" loading="lazy" decoding="async" />
           <div>
             <AnchoredHeading as="h3" id="founder">
               Robert Murray <span className="pron">(they/them)</span>
