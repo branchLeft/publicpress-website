@@ -43,8 +43,8 @@ export function JourneyBody(): React.JSX.Element {
                 <sup>
                   <a href="#src-g2">2</a>
                 </sup>{' '}
-                One place to publish your journalism, send it as a newsletter and earn from members,
-                on a site that is entirely yours.
+                One place to publish your journalism, engage with your audience and build
+                sustainable revenue, on a site that is entirely yours.
                 <sup>
                   <a href="#src-g3">3</a>
                 </sup>
@@ -164,7 +164,14 @@ export function JourneyBody(): React.JSX.Element {
         </section>
         <section className="wrap">
           <div className="who">
-            <img src={headshot} alt="Robert Murray" width="160" height="160" />
+            <img
+              src={headshot}
+              alt="Robert Murray"
+              width="160"
+              height="160"
+              loading="lazy"
+              decoding="async"
+            />
             <div>
               <AnchoredHeading as="h2" id="built-by">
                 Built by{' '}

@@ -56,9 +56,12 @@ test('fonts and the headshot are hashed files, not data: URIs', async ({ page })
   await page.evaluate(() => document.fonts.ready);
 
   expect(requested.filter((path) => /^\/assets\/jost-.+\.woff2$/.test(path))).not.toHaveLength(0);
-  expect(
-    requested.filter((path) => /^\/assets\/headshot-320-.+\.webp$/.test(path))
-  ).not.toHaveLength(0);
+  // The headshot loads lazily, so it is fetched only once it nears the viewport.
+  const headshot = page.waitForResponse((response) =>
+    /^\/assets\/headshot-320-.+\.webp$/.test(new URL(response.url()).pathname)
+  );
+  await page.locator('main img[src*="headshot-320-"]').first().scrollIntoViewIfNeeded();
+  await headshot;
   const html = (await (await page.request.get('/')).text()).toLowerCase();
   expect(html).not.toContain('data:font');
   expect(html).not.toContain('base64');
@@ -81,6 +84,8 @@ test('the head carries the title, description, canonical link and og tags', asyn
   );
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary');
 
+  await expect(page.locator('meta[name=robots]')).toHaveCount(0);
+
   await page.goto('/zzz/not-a-page');
   await expect(page).toHaveTitle(
     'Independent journalism, on independent infrastructure | PublicPress'
@@ -89,4 +94,42 @@ test('the head carries the title, description, canonical link and og tags', asyn
     'href',
     'https://publicpress.co.uk/'
   );
+  await expect(page.locator('meta[name=robots]')).toHaveAttribute('content', 'noindex, follow');
+
+  await page.goto('/included');
+  await expect(page.locator('meta[name=robots]')).toHaveCount(0);
+});
+
+test('each page carries one schema.org graph naming the page, the site and the operator', async ({
+  page,
+}) => {
+  await page.goto('/ghost-hosting');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en-GB');
+  const blocks = page.locator('script[type="application/ld+json"]');
+  await expect(blocks).toHaveCount(1);
+  const data = JSON.parse((await blocks.textContent()) ?? '') as {
+    '@graph': { '@type': string; url?: string }[];
+  };
+  expect(data['@graph'].map((node) => node['@type'])).toEqual([
+    'Organization',
+    'WebSite',
+    'WebPage',
+  ]);
+  expect(data['@graph'][2]?.url).toBe('https://publicpress.co.uk/ghost-hosting');
+});
+
+test('robots.txt allows everything and names the sitemap, which lists the two pages', async ({
+  request,
+}) => {
+  const robots = await request.get('/robots.txt');
+  expect(robots.status()).toBe(200);
+  expect(robots.headers()['content-type']).toContain('text/plain');
+  expect(await robots.text()).toContain('Sitemap: https://publicpress.co.uk/sitemap.xml');
+
+  const sitemap = await request.get('/sitemap.xml');
+  expect(sitemap.status()).toBe(200);
+  expect(sitemap.headers()['content-type']).toContain('application/xml');
+  const body = await sitemap.text();
+  expect(body).toContain('<loc>https://publicpress.co.uk/</loc>');
+  expect(body).toContain('<loc>https://publicpress.co.uk/ghost-hosting</loc>');
 });

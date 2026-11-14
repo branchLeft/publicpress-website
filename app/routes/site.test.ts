@@ -77,4 +77,42 @@ describe('meta', () => {
       });
     }
   });
+
+  it('marks only an unknown path noindex', () => {
+    const robotsTag = (indexable: boolean | undefined) =>
+      meta({
+        loaderData: { page: 'journey', indexable, renderedAt: 0 },
+      } as unknown as Parameters<typeof meta>[0]).filter(
+        (tag) => 'name' in tag && tag.name === 'robots'
+      );
+    expect(robotsTag(false)).toEqual([{ name: 'robots', content: 'noindex, follow' }]);
+    expect(robotsTag(true)).toEqual([]);
+    expect(robotsTag(undefined)).toEqual([]);
+  });
+
+  it('carries the page in the link-preview tags and its schema.org graph', () => {
+    const tags = metaFor('ghost-hosting');
+    expect(tags).toContainEqual({ property: 'og:site_name', content: 'PublicPress' });
+    expect(tags).toContainEqual({ property: 'og:locale', content: 'en_GB' });
+    expect(tags).toContainEqual({
+      name: 'twitter:title',
+      content: 'Managed Ghost hosting, done well | PublicPress',
+    });
+    const graph = tags.find((tag) => 'script:ld+json' in tag);
+    expect(JSON.stringify(graph)).toContain('https://publicpress.co.uk/ghost-hosting#webpage');
+  });
+});
+
+describe('loader indexable', () => {
+  it('is true for the pages and pop-ups, false elsewhere', async () => {
+    for (const [path, indexable] of [
+      ['/', true],
+      ['/ghost-hosting', true],
+      ['/moving', true],
+      ['/nonsense', false],
+      ['/a/b/c', false],
+    ] as const) {
+      expect((await loader(loaderArgs(`http://localhost${path}`))).indexable).toBe(indexable);
+    }
+  });
 });
