@@ -25,18 +25,18 @@
     "prepare": "[ \"$CI\" = \"true\" ] || pre-commit install"
   },
   "dependencies": {
-    "@react-router/node": "^8.4.0",
-    "@react-router/serve": "^8.4.0",
+    "@react-router/node": "^8.5.2",
+    "@react-router/serve": "^8.5.2",
     "isbot": "^5.2.2",
-    "nodemailer": "^10.6.0",
+    "nodemailer": "^10.6.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-router": "^8.4.0"
+    "react-router": "^8.5.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@playwright/test": "^1.65.1",
-    "@react-router/dev": "^8.4.0",
+    "@react-router/dev": "^8.5.2",
     "@types/node": "^26.6.6",
     "@types/nodemailer": "^8.0.1",
     "@types/react": "^19.3.0",
